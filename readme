@@ -1,42 +1,44 @@
+# backendapp-deployment.yaml
 
-Certainly! Below is the README.md file for the outlined tasks:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backendapp
+  namespace: dev
+spec:
+  replicas: 3 # adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: backendapp
+  template:
+    metadata:
+      labels:
+        app: backendapp
+    spec:
+      containers:
+      - name: backendapp
+        image: <your-ecr-repo>/backendapp:latest # replace <your-ecr-repo> with your ECR repository URI
+        ports:
+        - containerPort: 8080 # adjust the port if your backend listens on a different port
+        env:
+          - name: AWS_REGION
+            value: <your-aws-region> # specify your AWS region
+          # Add other environment variables as needed
 
-DevOps Task: Setting Up CI/CD and Security Measures
-Description
-This repository contains instructions and guidelines for a senior DevOps engineer to set up Continuous Integration/Continuous Deployment (CI/CD) pipelines and implement security measures for repositories using the R language, as per the provided tasks.
+---
 
-Table of Contents
-Task 1: Setting Up CI/CD Builds
-Task 2: Implementing Security Measures
-Contributing
-License
-Task 1: Setting Up CI/CD Builds
-To achieve this task, follow these steps:
+# backendapp-service.yaml
 
-1. Duplicate Praveen's CI/CD Builds
-Review Praveen's existing CI/CD configuration in GitHub Actions.
-Duplicate the CI/CD workflows for the chosen repository from the public CDC GitHub site.
-Ensure the workflows are correctly configured and functional.
-2. Fork Repository from CDC GitHub Site
-Choose a repository from the CDC GitHub site that uses the R language.
-Fork the selected repository to your GitHub account for customization.
-3. Use Private GitHub Action Runners
-Refer to the documentation provided by Praveen or GitHub on using private GitHub Action runners.
-Set up and configure private runners to execute GitHub Actions workflows securely.
-Task 2: Implementing Security Measures
-To implement security measures for the repositories, follow these steps:
-
-1. Enable CVE Scanning and SBOM Creation
-Utilize Anchore open-source tooling to perform CVE scanning and generate Software Bill of Materials (SBOM) for the repositories.
-Configure Anchore to scan for vulnerabilities in dependencies and create SBOMs as part of the CI/CD pipelines.
-2. Enable Dependabot
-Navigate to the Security & Analysis settings of each repository.
-Enable Dependabot alerts for vulnerability detection and dependency updates.
-Ensure Dependabot is configured according to organizational policies and requirements.
-
-Contributing
-Contributions to this project are welcome! If you have suggestions, enhancements, or bug fixes, please feel free to submit a pull request.
-
-License
-
-
+apiVersion: v1
+kind: Service
+metadata:
+  name: backendapp
+  namespace: dev
+spec:
+  selector:
+    app: backendapp
+  ports:
+    - protocol: TCP
+      port: 8080 # specify the port your backend listens on
+      targetPort: 8080 # specify the port your backend container exposes
+  type: NodePort # Expose the service as a NodePort
