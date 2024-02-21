@@ -1,0 +1,100 @@
+Amazon EC2 (Elastic Compute Cloud)
+Amazon S3 (Simple Storage Service)
+Amazon RDS (Relational Database Service)
+Amazon VPC (Virtual Private Cloud)
+Amazon IAM (Identity and Access Management)
+Amazon CloudWatch
+Amazon Route 53
+Amazon SQS (Simple Queue Service)
+Amazon SNS (Simple Notification Service)
+AWS Lambda
+Amazon ECS (Elastic Container Service)
+Amazon EKS (Elastic Kubernetes Service)
+Amazon Redshift
+Amazon DynamoDB
+Amazon EMR (Elastic MapReduce)
+Amazon Glacier
+Amazon CloudFront
+Amazon SNS (Simple Notification Service)
+AWS IAM (Identity and Access Management)
+Amazon Elasticsearch Service
+AWS Batch
+Amazon CloudFormation
+Amazon API Gateway
+AWS Direct Connect
+Amazon ElastiCache
+AWS Glue
+Amazon Kinesis
+AWS Data Pipeline
+AWS Step Functions
+AWS CodePipeline
+AWS CodeBuild
+AWS CodeDeploy
+AWS CodeCommit
+Amazon Cognito
+Amazon Aurora
+AWS CloudTrail
+AWS Budgets
+AWS Cost Explorer
+AWS Organizations
+AWS Resource Groups
+Amazon WorkSpaces
+Amazon WorkDocs
+Amazon WorkMail
+Amazon WorkLink
+AWS VPN
+Amazon AppStream
+AWS Storage Gateway
+Amazon Polly
+Amazon Lex
+Amazon Rekognition
+Amazon Comprehend
+Amazon Translate
+AWS IoT Core
+AWS IoT Greengrass
+AWS IoT Device Management
+AWS IoT Analytics
+AWS IoT Events
+AWS IoT Things Graph
+Amazon Pinpoint
+Amazon Simple Email Service (SES)
+Amazon WorkMail
+AWS Shield
+AWS WAF (Web Application Firewall)
+Amazon Macie
+AWS Key Management Service (KMS)
+AWS Secrets Manager
+AWS Certificate Manager
+AWS Firewall Manager
+Amazon Detective
+AWS Config
+Amazon Cloud Directory
+Amazon MQ (Message Queue)
+AWS Backup
+Amazon FSx (File System)
+Amazon DocumentDB
+Amazon Neptune
+Amazon QLDB (Quantum Ledger Database)
+Amazon Managed Blockchain
+AWS Transfer for SFTP
+AWS Snow Family (Snowball, Snowcone, Snowmobile)
+AWS Migration Hub
+AWS Application Discovery Service
+AWS Database Migration Service
+AWS Server Migration Service
+AWS Snowball Edge
+AWS Storage Gateway
+AWS Snowmobile
+AWS Control Tower
+AWS Service Catalog
+AWS License Manager
+Amazon Connect
+Amazon Kendra
+Amazon Lex
+Amazon Polly
+Amazon Rekognition
+Amazon Transcribe
+AWS Deep Learning AMIs
+AWS Deep Learning Containers
+Amazon SageMaker
+Amazon Personalize
