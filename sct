@@ -1,0 +1,32 @@
+name: Automation Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  automate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run Automation Script
+        run: python scripts/automate.py
+        env:
+          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AZURE_DEVOPS_ORGANIZATION: ${{ secrets.AZURE_DEVOPS_ORGANIZATION }}
+          AZURE_DEVOPS_PROJECT: ${{ secrets.AZURE_DEVOPS_PROJECT }}
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+          ENTERPRISE_GITHUB_USERNAME: ${{ secrets.ENTERPRISE_GITHUB_USERNAME }}
+          ENTERPRISE_GITHUB_TOKEN: ${{ secrets.ENTERPRISE_GITHUB_TOKEN }}
