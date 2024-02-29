@@ -1,32 +1,138 @@
-name: Automation Workflow
+import os
+import shutil
+import subprocess
+import requests
 
-on:
-  push:
-    branches:
-      - main
+def clone_azure_devops_repo(azure_devops_organization, azure_devops_project, azure_devops_pat, repo_name, clone_dir):
+    try:
+        subprocess.run(["git", "clone", "--mirror", f"https://dev.azure.com/{azure_devops_organization}/{azure_devops_project}/_git/{repo_name}", clone_dir], check=True)
+        print("Azure DevOps repository cloned successfully.")
+    except subprocess.CalledProcessError as e:
+        print("Error cloning Azure DevOps repository:", e)
+        exit(1)
 
-jobs:
-  automate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+def push_to_github_enterprise(enterprise_github_username, enterprise_github_token, repo_name, clone_dir):
+    github_repo_url = f"https://{enterprise_github_username}:{enterprise_github_token}@github.enterprise.com/{enterprise_github_username}/{repo_name}.git"
+    try:
+        subprocess.run(["git", "-C", clone_dir, "remote", "add", "github", github_repo_url], check=True)
+        print("GitHub remote added successfully.")
+    except subprocess.CalledProcessError as e:
+        print("Error adding GitHub remote:", e)
+        exit(1)
+    try:
+        subprocess.run(["git", "-C", clone_dir, "push", "--mirror", "github"], check=True)
+        print("Repository successfully pushed to GitHub.")
+    except subprocess.CalledProcessError as e:
+        print("Error pushing repository to GitHub:", e)
+        exit(1)
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+# Azure DevOps details and GitHub Enterprise credentials
+azure_devops_organization = "your_organization"
+azure_devops_project = "your_project"
+azure_devops_pat = input("Input Azure DevOps PAT: ")
+enterprise_github_username = "your_github_username"
+enterprise_github_token = input("Input GitHub Enterprise PAT: ")
 
-      - name: Install dependencies
-        run: pip install -r scripts/requirements.txt
+# Extract repository name
+repo_name = "repo_to_clone"
 
-      - name: Run Automation Script
-        run: python scripts/automate.py
-        env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AZURE_DEVOPS_ORGANIZATION: ${{ secrets.AZURE_DEVOPS_ORGANIZATION }}
-          AZURE_DEVOPS_PROJECT: ${{ secrets.AZURE_DEVOPS_PROJECT }}
-          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
-          ENTERPRISE_GITHUB_USERNAME: ${{ secrets.ENTERPRISE_GITHUB_USERNAME }}
-          ENTERPRISE_GITHUB_TOKEN: ${{ secrets.ENTERPRISE_GITHUB_TOKEN }}
+# Directory to clone the repository
+clone_dir = "temp_repo"
+
+# Clone the Azure DevOps repository
+clone_azure_devops_repo(azure_devops_organization, azure_devops_project, azure_devops_pat, repo_name, clone_dir)
+
+# Push to GitHub Enterprise
+push_to_github_enterprise(enterprise_github_username, enterprise_github_token, repo_name, clone_dir)
+
+# Clean up
+shutil.rmtree(clone_dir)
+---
+
+
+Sure! Here's an extensive README for the project:
+
+Azure DevOps to GitHub Enterprise Migration
+This project automates the process of migrating code repositories from Azure DevOps to GitHub Enterprise. It provides a Python script that clones a repository from Azure DevOps and pushes it to GitHub Enterprise while maintaining the repository history and metadata.
+
+Table of Contents
+Overview
+Features
+Prerequisites
+Setup
+Usage
+Contributing
+License
+Overview
+Migrating code repositories between version control platforms can be a tedious task, especially when dealing with large projects or multiple repositories. This project aims to simplify the migration process by providing an automated solution.
+
+Features
+Clone from Azure DevOps: Clones a repository from Azure DevOps using Git.
+Push to GitHub Enterprise: Pushes the cloned repository to GitHub Enterprise with preserved history and metadata.
+Simple Configuration: Requires minimal configuration with just Azure DevOps and GitHub Enterprise credentials.
+Prerequisites
+Before using this project, ensure you have the following prerequisites:
+
+Azure DevOps account with access to the repository you want to migrate.
+GitHub Enterprise account with access to create repositories.
+Python installed on your system (version 3.x).
+Setup
+Clone the Repository: Clone this repository to your local machine.
+
+bash
+Copy code
+git clone https://github.com/your_username/azure-devops-to-github-enterprise.git
+Install Dependencies: Navigate to the project directory and install the required Python dependencies.
+
+bash
+Copy code
+cd azure-devops-to-github-enterprise
+pip install -r requirements.txt
+Configure GitHub Enterprise Credentials: Set up your GitHub Enterprise credentials as environment variables or pass them directly to the script (see Usage section).
+
+Usage
+To migrate a repository from Azure DevOps to GitHub Enterprise, follow these steps:
+
+Run the Python script migrate.py with the necessary parameters:
+
+bash
+Copy code
+python migrate.py
+You will be prompted to enter your Azure DevOps Personal Access Token (PAT) and GitHub Enterprise PAT.
+
+Follow the instructions provided by the script. It will clone the repository from Azure DevOps and push it to GitHub Enterprise.
+
+After successful migration, verify the repository on GitHub Enterprise.
+
+Contributing
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on GitHub.
+---
+
+# Python-specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+env/
+.venv/
+pip-wheel-metadata/
+
+# IDE-specific
+.vscode/
+.idea/
+
+# Compiled files
+*.pyc
+
+# Temporary files
+*.swp
+*~
+
+# Miscellaneous
+.DS_Store
+node_modules/
+---
+requests>=2.26.0
