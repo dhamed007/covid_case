@@ -48,6 +48,72 @@ if __name__ == "__main__":
     clone_cdc_repo(cdc_repo_url, enterprise_github_username, enterprise_repo_name)
 ---
 
+name: Clone CDC Repo and Push to Enterprise GitHub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  clone_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install requests  # Install requests library
+
+      - name: Run Python Script
+        run: |
+          python script.py
+          # Comment out the following lines if not needed
+          # python scripts/azure_devops_to_enterprise_github.py
+        env:
+          ENTERPRISE_GITHUB_TOKEN: ${{ secrets.ENTERPRISE_GITHUB_TOKEN }}
+---
+
+name: Clone CDC Repo and Push to Enterprise GitHub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  clone_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install requests  # Install requests library
+
+      - name: Run Python Script
+        run: |
+          python script.py
+          # Comment out the following lines if not needed
+          # python scripts/azure_devops_to_enterprise_github.py
+        env:
+          ENTERPRISE_GITHUB_TOKEN: ${{ secrets.ENTERPRISE_GITHUB_TOKEN }}
 
 
   
