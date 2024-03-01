@@ -115,5 +115,56 @@ jobs:
         env:
           ENTERPRISE_GITHUB_TOKEN: ${{ secrets.ENTERPRISE_GITHUB_TOKEN }}
 
+---
 
+# CDC Repo Cloner
+
+This script automates the process of cloning a repository from the Centers for Disease Control and Prevention (CDC) GitHub account and pushing it to an enterprise GitHub repository.
+
+## Overview
+
+This project is designed to streamline the process of migrating code from a CDC repository to an enterprise GitHub repository. It utilizes a Python script to clone the CDC repository, push the code to the enterprise GitHub repository, and create a `catalog-info.yml` file.
+
+## Usage
+
+### Prerequisites
+
+Before running the script, ensure that you have the following:
+
+- Python 3.x installed on your system
+- Access to the CDC GitHub repository
+- Access to the enterprise GitHub repository
+- Necessary permissions and credentials to push code to the enterprise repository
+
+### Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/your-username/cdc-repo-cloner.git
+Navigate to the project directory:
+
+bash
+Copy code
+cd cdc-repo-cloner
+Install the required dependencies:
+
+bash
+Copy code
+pip install -r requirements.txt
+Configuration
+Before running the script, you need to configure the following variables in the script file (script.py):
+
+cdc_repo_url: URL of the CDC repository to clone.
+enterprise_github_username: Your enterprise GitHub username.
+enterprise_repo_name: Name of the repository in your enterprise GitHub account.
+Running the Script
+To execute the script, run the following command:
+
+bash
+Copy code
+python script.py
+The script will clone the CDC repository, push the code to the enterprise GitHub repository, and create a catalog-info.yml file.
+
+License
   
