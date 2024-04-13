@@ -1,0 +1,55 @@
+import os
+import subprocess
+
+# GitHub credentials
+github_username = os.getenv("GITHUB_USERNAME")
+github_token = os.getenv("GITHUB_TOKEN")
+
+# Azure DevOps credentials
+azure_devops_organization = os.getenv("AZURE_DEVOPS_ORGANIZATION")
+azure_devops_project = os.getenv("AZURE_DEVOPS_PROJECT")
+azure_devops_pat = os.getenv("AZURE_DEVOPS_PAT")
+
+# Enterprise GitHub credentials
+enterprise_github_username = os.getenv("ENTERPRISE_GITHUB_USERNAME")
+enterprise_github_token = os.getenv("ENTERPRISE_GITHUB_TOKEN")
+
+# Repo information
+repo_name = "repo_to_clone"
+repo_owner = "owner_of_repo"
+
+def clone_repo_from_github():
+    # Cloning the repo from GitHub to local
+    subprocess.run(["git", "clone", f"https://{github_username}:{github_token}@github.com/{repo_owner}/{repo_name}.git"])
+
+def push_to_azure_devops():
+    # Change directory to the cloned repo
+    os.chdir(repo_name)
+    
+    # Pushing the repo to Azure DevOps
+    subprocess.run(["git", "remote", "add", "azure", f"https://{azure_devops_organization}.visualstudio.com/{azure_devops_project}/_git/{repo_name}"])
+    subprocess.run(["git", "push", "azure", "--mirror"])
+
+def push_to_enterprise_github():
+    # Pushing the repo to Enterprise GitHub
+    subprocess.run(["git", "remote", "add", "enterprise", f"https://{enterprise_github_username}:{enterprise_github_token}@github.enterprise.com/{repo_owner}/{repo_name}.git"])
+    subprocess.run(["git", "push", "enterprise", "--mirror"])
+
+if __name__ == "__main__":
+    clone_repo_from_github()
+    push_to_azure_devops()
+    push_to_enterprise_github()
+---
+
+
+ 
+.env
+
+GITHUB_USERNAME=your_github_username
+GITHUB_TOKEN=your_github_token
+AZURE_DEVOPS_ORGANIZATION=your_azure_devops_organization
+AZURE_DEVOPS_PROJECT=your_azure_devops_project
+AZURE_DEVOPS_PAT=your_azure_devops_personal_access_token
+ENTERPRISE_GITHUB_USERNAME=your_enterprise_github_username
+ENTERPRISE_GITHUB_TOKEN=your_enterprise_github_personal_access_token
+
